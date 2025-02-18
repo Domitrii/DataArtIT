@@ -71,3 +71,23 @@
     width: 24px;
     height: 24px;
 }
+
+.emojis{
+    display: flex;
+    justify-content:space-around;
+    gap: 30px;
+}
+
+.emoji {
+    width: fit-content;
+    min-width: 44px;
+    cursor: pointer;
+    border: none;
+    background-color: white;
+    margin-top: 12px;
+}
+
+.emoji:hover {
+    background-color: rgb(215, 215, 215);
+    border-radius: 4px;
+}
