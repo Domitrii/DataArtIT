@@ -13,7 +13,7 @@ function App() {
 
   const getData = async () => {
     try {
-      const result = await axios.get('http://localhost:7070/api/');
+      const result = await axios.get('https://dataartback.onrender.com/api/');
 
       setJokeId(result.data._id);
       setHeader(result.data.question)
@@ -35,7 +35,7 @@ function App() {
     });
 
     try {
-      await axios.post('http://localhost:7070/api/updateVotes/', data);
+      await axios.post('https://dataartback.onrender.com/api/updateVotes/', data);
     } catch (error) {
       console.error('Error updating vote:', error);
     }
