@@ -7,28 +7,19 @@ function App() {
   const [header, setHeader] = useState('')
   const [response, setResponse] = useState('');
   const [emojis, setEmojis] = useState([])
-  const [emojiRes, setEmojiRes] = useState([])
-  const [numb , setNumb] = useState(0)
+  const [votes, setVotes] = useState([])
+  const [jokeId, setJokeId] = useState('');
+
 
   const getData = async () => {
     try {
       const result = await axios.get('http://localhost:7070/api/');
 
+      setJokeId(result.data._id);
       setHeader(result.data.question)
       setResponse(result.data.answer)
-
-
       setEmojis(result.data.availableVotes)
-      for(let i = 0; i < 3; i++){
-        emojiRes[i] = 
-        <button 
-        className={s.emoji} 
-        onClick={() => 
-          handleVote(result.data._id, emojis[i], i)
-        } key={i}>
-          {emojis[i]}: {result.data.votes[i].value}
-        </button>
-      }
+      setVotes(result.data.votes);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -37,9 +28,14 @@ function App() {
   const handleVote = async (jokeId, voteType, emojiNumb) => {
     const data = { jokeId, voteType };
 
+    setVotes(prevVotes => {
+      return prevVotes.map((vote, index) =>
+        index === emojiNumb ? { ...vote, value: vote.value + 1 } : vote
+      );
+    });
+
     try {
-      const result = await axios.post('http://localhost:7070/api/updateVotes/', data);
-      console.log(result.data.votes[emojiNumb].value)
+      await axios.post('http://localhost:7070/api/updateVotes/', data);
     } catch (error) {
       console.error('Error updating vote:', error);
     }
@@ -62,7 +58,16 @@ function App() {
             <div>{response}</div>
           </div>
           <div className={s.emojis}>
-            {emojiRes}
+          {emojis.map((emoji, index) => (
+            <button 
+              className={s.emoji} 
+              onClick={() => handleVote(jokeId, emoji, index)} 
+              key={index}
+            >
+              {emoji}: {votes[index]?.value || 0}
+            </button>
+          ))}
+
           </div>
         </div>
         <span className={s.blockBtn}>
