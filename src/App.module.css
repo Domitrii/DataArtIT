@@ -40,11 +40,15 @@
     min-height: 200px;
     max-width: 400px;
     max-height: 300px;
-    display: flex;
+    flex-direction: column;
     padding: 8px;
     font-size: 17px;
     line-height: 1.4;
     text-align: center;
+}
+
+.jokeQ {
+    font-weight: 700;
 }
 
 .blockBtn{

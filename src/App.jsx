@@ -54,7 +54,7 @@ function App() {
       <div className={s.mainSection}>
         <div>
           <div className={s.jokeBlock}>
-            <div>{header}</div>
+            <div className={s.jokeQ}>{header}</div>
             <div>{response}</div>
           </div>
           <div className={s.emojis}>
